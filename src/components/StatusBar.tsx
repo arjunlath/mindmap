@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  CloudCheck,
+  Cloud,
   CloudUpload,
   Minus,
   Plus,

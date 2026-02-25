@@ -15,6 +15,7 @@ import {
 import { useMindMapStore } from '../store/useMindMapStore';
 import { getLayoutedElements } from '../layout/engine';
 import { useReactFlow } from 'reactflow';
+import { cn } from '../utils/cn';
 
 export const Toolbar = () => {
   const {
@@ -154,5 +155,3 @@ export const Toolbar = () => {
     </div>
   );
 };
-
-import { cn } from '../utils/cn';
