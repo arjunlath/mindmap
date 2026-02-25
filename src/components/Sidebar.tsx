@@ -11,10 +11,10 @@ import {
   Sun,
   History
 } from 'lucide-react';
-import { useMindMapStore } from '../store/useMindMapStore';
+import { useMindMapStore } from '@/store/useMindMapStore';
 import { motion, AnimatePresence } from 'framer-motion';
-import { fileService } from '../services/fileService';
-import { cn } from '../utils/cn';
+import { fileService } from '@/services/fileService';
+import { cn } from '@/utils/cn';
 
 export const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(true);

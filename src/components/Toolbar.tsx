@@ -12,10 +12,10 @@ import {
   Download,
   Search
 } from 'lucide-react';
-import { useMindMapStore } from '../store/useMindMapStore';
-import { getLayoutedElements } from '../layout/engine';
+import { useMindMapStore } from '@/store/useMindMapStore';
+import { getLayoutedElements } from '@/layout/engine';
 import { useReactFlow } from 'reactflow';
-import { cn } from '../utils/cn';
+import { cn } from '@/utils/cn';
 
 export const Toolbar = () => {
   const {

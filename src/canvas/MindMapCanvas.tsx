@@ -8,9 +8,9 @@ import ReactFlow, {
 } from 'reactflow';
 import 'reactflow/dist/style.css';
 
-import { useMindMapStore } from '../store/useMindMapStore';
-import { MindMapNode } from '../components/Node/MindMapNode';
-import { useKeyboardShortcuts } from '../hooks/useKeyboardShortcuts';
+import { useMindMapStore } from '@/store/useMindMapStore';
+import { MindMapNode } from '@/components/Node/MindMapNode';
+import { useKeyboardShortcuts } from '@/hooks/useKeyboardShortcuts';
 
 const nodeTypes = {
   mindmap: MindMapNode,

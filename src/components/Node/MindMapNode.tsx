@@ -1,8 +1,8 @@
 import React, { useState, useCallback, useEffect, useRef } from 'react';
 import { Handle, Position, NodeProps } from 'reactflow';
-import { useMindMapStore } from '../../store/useMindMapStore';
-import { MindMapNodeData } from '../../types/mindmap';
-import { cn } from '../../utils/cn';
+import { useMindMapStore } from '@/store/useMindMapStore';
+import { MindMapNodeData } from '@/types/mindmap';
+import { cn } from '@/utils/cn';
 import { ChevronRight, ChevronDown } from 'lucide-react';
 
 export const MindMapNode = ({ id, data, selected }: NodeProps<MindMapNodeData>) => {
