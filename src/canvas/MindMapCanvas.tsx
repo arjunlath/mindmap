@@ -1,15 +1,14 @@
-import React, { useMemo, useCallback } from 'react';
+import React, { useMemo } from 'react';
 import ReactFlow, {
   Background,
   Controls,
   MiniMap,
   BackgroundVariant,
-  Panel,
 } from 'reactflow';
 import 'reactflow/dist/style.css';
 
 import { useMindMapStore } from '@/store/useMindMapStore';
-import { MindMapNode } from '@/components/Node/MindMapNode';
+import MindMapNode from '@/components/MindMapNode';
 import { useKeyboardShortcuts } from '@/hooks/useKeyboardShortcuts';
 
 const nodeTypes = {
@@ -30,7 +29,7 @@ export const MindMapCanvas = () => {
   const proOptions = { hideAttribution: true };
 
   return (
-    <div className="w-full h-full bg-slate-50 dark:bg-slate-900">
+    <div className="w-full h-full bg-slate-50 dark:bg-slate-900 transition-colors">
       <ReactFlow
         nodes={nodes}
         edges={edges}
@@ -44,17 +43,22 @@ export const MindMapCanvas = () => {
         snapGrid={[15, 15]}
         defaultEdgeOptions={{
           type: 'smoothstep',
-          style: { strokeWidth: 2, stroke: '#94a3b8' },
+          style: { strokeWidth: 2, stroke: '#3b82f6', opacity: 0.6 },
+          animated: true,
         }}
       >
-        <Background variant={BackgroundVariant.Dots} gap={20} size={1} />
-        <Controls showInteractive={false} className="bg-white/70 backdrop-blur-md border-white/30" />
+        <Background variant={BackgroundVariant.Dots} gap={25} size={1} />
+        <Controls
+          showInteractive={false}
+          className="bg-white/70 backdrop-blur-md border border-white/30 rounded-lg overflow-hidden !shadow-lg"
+        />
         <MiniMap
-          className="bg-white/70 backdrop-blur-md border-white/30 rounded-lg overflow-hidden"
+          className="bg-white/70 backdrop-blur-md border border-white/30 rounded-xl overflow-hidden !shadow-2xl"
           nodeColor={(node) => {
             if (node.data.isRoot) return '#3b82f6';
             return '#94a3b8';
           }}
+          maskColor="rgba(0, 0, 0, 0.1)"
         />
       </ReactFlow>
     </div>

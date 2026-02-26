@@ -1,86 +1,50 @@
-# Premium Mind Map Application
+# Modern SaaS Mind Map Application
 
-A production-grade Mind Map application with a modern, premium UI similar to Wondershare EdrawMind and XMind. Built with React, TypeScript, React Flow, and Electron.
+A production-grade, web-based Mind Map application with a premium, glassmorphism UI. Built for SaaS deployment but supports local file operations and modern browser features.
 
-## 🚀 Features
+## 🚀 Key Features
 
-### 🧠 Core Mind Map Logic
-- **Node Management**: Add nodes (Tab) and siblings (Enter).
-- **Auto Layout**: Hierarchical layout engine to keep your maps organized.
-- **Drag & Drop**: Intuitive reordering and movement.
-- **Keyboard Shortcuts**: Full keyboard navigation support for productivity.
+- **Premium UI**: Modern glassmorphism panels, soft shadows, and clean typography.
+- **Dynamic State**: Powered by Zustand with local persistence and undo/redo history.
+- **Auto-Layout**: Hierarchical tree layout engine for instant organization.
+- **SaaS-Ready**: Optimized for browser deployment with local file download/upload (.mmap).
+- **Smooth Navigation**: Infinite canvas with smooth zoom, pan, and mini-map overview.
+- **Export Engine**: Export your maps directly to PNG or PDF.
+- **Keyboard Productivity**: Tab for children, Enter for siblings, and more.
+- **Adaptive Themes**: Light, Dark, and System theme synchronization.
 
-### 🎨 Premium UI/UX
-- **Glassmorphism Design**: Modern, translucent UI with blurred backgrounds.
-- **Dark/Light Mode**: Seamless theme switching.
-- **Animations**: Smooth transitions using Framer Motion.
-- **Infinite Canvas**: Smooth zoom & pan with mouse wheel and trackpad support.
-- **Mini-map**: Overview panel for large map navigation.
+## 🛠 Tech Stack
 
-### 💾 Data & Persistence
-- **Autosave**: Debounced background saving (every 3 seconds).
-- **Local Storage**: Opens and saves `.mmap` (JSON-based) files directly to your machine.
-- **Export**: Save your maps as PNG, PDF, or JSON.
-- **Undo/Redo**: Full history stack for worry-free editing.
-
-## 🛠 Technical Stack
-
-- **Frontend**: React + TypeScript
-- **Styling**: TailwindCSS
-- **State Management**: Zustand
-- **Canvas Rendering**: React Flow
-- **Desktop Wrapper**: Electron
+- **Frontend**: React 19 + TypeScript
+- **State**: Zustand (Persisted)
+- **Canvas**: React Flow
+- **Styling**: TailwindCSS 4
 - **Animations**: Framer Motion
 - **Icons**: Lucide React
-- **Testing**: Vitest
+- **Build**: Vite
 
-## 📂 Project Architecture
+## 📂 Architecture
 
-```
-/src
-  /canvas      # React Flow canvas implementation
-  /components  # UI components (Node, Toolbar, Sidebar, etc.)
-  /hooks       # Custom hooks (useKeyboardShortcuts, useAutosave, etc.)
-  /layout      # Layout engine and tree algorithms
-  /services    # File system and export services
-  /store       # Zustand state management
-  /types       # TypeScript interfaces
-  /utils       # Helper functions
-/electron      # Electron main and preload scripts
-```
+- `/src/canvas`: Main React Flow implementation.
+- `/src/store`: Centralized state management with persistence logic.
+- `/src/components`: Premium UI components with glassmorphism.
+- `/src/services`: Browser-based file handling and export services.
+- `/src/utils`: Layout algorithms and UI helpers.
 
-## 💻 Getting Started
+## 💻 Local Development
 
-### Prerequisites
-
-- Node.js (v18 or higher)
-- npm or yarn
-
-### Installation
-
-1. Clone the repository
-2. Install dependencies:
+1. Install dependencies:
    ```bash
    npm install
    ```
-
-### Development
-
-To start the application in development mode:
-```bash
-npm run dev
-```
-
-### Building
-
-To package the application for production:
-```bash
-npm run build
-```
+2. Start dev server:
+   ```bash
+   npm run dev
+   ```
 
 ## 🧪 Testing
 
-Run unit tests for the layout engine and state logic:
+Run unit tests for core logic:
 ```bash
 npm test
 ```

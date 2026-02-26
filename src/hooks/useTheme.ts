@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useMindMapStore } from '../store/useMindMapStore';
+import { useMindMapStore } from '@/store/useMindMapStore';
 
 export const useTheme = () => {
   const theme = useMindMapStore((state) => state.theme);

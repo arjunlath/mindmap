@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useReactFlow } from 'reactflow';
-import { useMindMapStore } from '../store/useMindMapStore';
+import { useMindMapStore } from '@/store/useMindMapStore';
 
 export const useKeyboardShortcuts = () => {
   const { getNodes } = useReactFlow();
@@ -9,26 +9,29 @@ export const useKeyboardShortcuts = () => {
   const deleteNode = useMindMapStore((state) => state.deleteNode);
   const undo = useMindMapStore((state) => state.undo);
   const redo = useMindMapStore((state) => state.redo);
-  const { edges, setSelectedNode } = useMindMapStore();
+  const setSelectedNode = useMindMapStore((state) => state.setSelectedNode);
+  const edges = useMindMapStore((state) => state.edges);
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
-      const selectedNodes = getNodes().filter((node) => node.selected);
+      const allNodes = getNodes();
+      const selectedNodes = allNodes.filter((node) => node.selected);
       const selectedNode = selectedNodes[0];
+
+      // Avoid triggering shortcuts when typing in an input
+      if (
+        document.activeElement?.tagName === 'INPUT' ||
+        document.activeElement?.tagName === 'TEXTAREA' ||
+        (document.activeElement as HTMLElement)?.isContentEditable
+      ) {
+        return;
+      }
 
       if (!selectedNode) {
         if ((event.ctrlKey || event.metaKey) && event.key === 'z') {
           if (event.shiftKey) redo();
           else undo();
         }
-        return;
-      }
-
-      // Avoid triggering shortcuts when typing in an input
-      if (
-        document.activeElement?.tagName === 'INPUT' ||
-        document.activeElement?.tagName === 'TEXTAREA'
-      ) {
         return;
       }
 
@@ -102,5 +105,5 @@ export const useKeyboardShortcuts = () => {
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [getNodes, addNode, addSibling, deleteNode, undo, redo]);
+  }, [getNodes, addNode, addSibling, deleteNode, undo, redo, edges, setSelectedNode]);
 };

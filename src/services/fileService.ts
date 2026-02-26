@@ -1,41 +1,32 @@
-import { MindMapData } from '../types/mindmap';
+import { MindMapData } from '@/types/mindmap';
 
 export const fileService = {
-  async openFile(): Promise<{ filePath: string; data: MindMapData } | null> {
-    const result = await window.electronAPI.showOpenDialog();
-    if (!result) return null;
-    return {
-      filePath: result.filePath,
-      data: result.content as MindMapData,
-    };
+  downloadFile(data: MindMapData, fileName: string) {
+    const json = JSON.stringify(data, null, 2);
+    const blob = new Blob([json], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = fileName;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
   },
 
-  async saveFile(filePath: string, data: MindMapData): Promise<boolean> {
-    return await window.electronAPI.saveFile(filePath, data);
-  },
-
-  async saveAs(title: string, data: MindMapData): Promise<string | null> {
-    const filePath = await window.electronAPI.showSaveDialog(title);
-    if (!filePath) return null;
-    const success = await this.saveFile(filePath, data);
-    return success ? filePath : null;
-  },
-
-  async newFile(): Promise<MindMapData> {
-    return {
-      nodes: [
-        {
-          id: 'root',
-          type: 'mindmap',
-          data: { label: 'Central Topic', isRoot: true },
-          position: { x: 0, y: 0 },
-        },
-      ],
-      edges: [],
-      metadata: {
-        title: 'Untitled Mind Map',
-        lastModified: new Date().toISOString(),
-      },
-    };
+  async readFile(file: File): Promise<MindMapData> {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        try {
+          const data = JSON.parse(e.target?.result as string);
+          resolve(data as MindMapData);
+        } catch (err) {
+          reject(err);
+        }
+      };
+      reader.onerror = reject;
+      reader.readAsText(file);
+    });
   }
 };

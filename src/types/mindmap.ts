@@ -4,10 +4,7 @@ export interface MindMapNodeData {
   label: string;
   isRoot?: boolean;
   collapsed?: boolean;
-  icon?: string;
   emoji?: string;
-  tags?: string[];
-  description?: string;
 }
 
 export interface MindMapNodeStyle {
@@ -15,10 +12,7 @@ export interface MindMapNodeStyle {
   color?: string;
   fontSize?: number;
   fontWeight?: string | number;
-  borderRadius?: number;
-  borderWidth?: number;
-  borderColor?: string;
-  borderStyle?: 'solid' | 'dashed' | 'dotted';
+  fontStyle?: string;
 }
 
 export type CustomNode = Node<MindMapNodeData>;
@@ -28,10 +22,8 @@ export interface MindMapData {
   edges: Edge[];
   metadata: {
     title: string;
-    description?: string;
-    author?: string;
     lastModified: string;
-    theme?: string;
+    theme?: 'light' | 'dark' | 'system';
   };
 }
 
@@ -39,10 +31,7 @@ export interface MindMapState {
   nodes: CustomNode[];
   edges: Edge[];
   title: string;
-  filePath: string | null;
   isDirty: boolean;
-  lastSaved: string | null;
-  selectedNodeId: string | null;
   theme: 'light' | 'dark' | 'system';
   undoStack: MindMapData[];
   redoStack: MindMapData[];

@@ -1,46 +1,35 @@
-import { useEffect, useRef } from 'react';
-import { useMindMapStore } from '../store/useMindMapStore';
-import { fileService } from '../services/fileService';
+import { useEffect, useState, useRef } from 'react';
+import { useMindMapStore } from '@/store/useMindMapStore';
 
-export const useAutosave = (debounceMs = 3000) => {
-  const {
-    nodes,
-    edges,
-    title,
-    filePath,
-    isDirty,
-    setDirty
-  } = useMindMapStore();
-
+export const useAutosave = (delay = 2000) => {
+  const isDirty = useMindMapStore((state) => state.isDirty);
+  const setDirty = useMindMapStore((state) => state.setDirty);
+  const [isSaving, setIsSaving] = useState(false);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
-    if (!isDirty || !filePath) return;
+    if (isDirty) {
+      setIsSaving(true);
 
-    if (timeoutRef.current) {
-      clearTimeout(timeoutRef.current);
-    }
-
-    timeoutRef.current = setTimeout(async () => {
-      const data = {
-        nodes,
-        edges,
-        metadata: {
-          title,
-          lastModified: new Date().toISOString(),
-        }
-      };
-
-      const success = await fileService.saveFile(filePath, data);
-      if (success) {
-        setDirty(false);
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
       }
-    }, debounceMs);
+
+      timeoutRef.current = setTimeout(() => {
+        // In a real SaaS, this would be an API call
+        // For now, Zustand persist handles local storage
+        // We just clear the dirty flag and show saved status
+        setDirty(false);
+        setIsSaving(false);
+      }, delay);
+    }
 
     return () => {
       if (timeoutRef.current) {
         clearTimeout(timeoutRef.current);
       }
     };
-  }, [nodes, edges, title, filePath, isDirty, setDirty, debounceMs]);
+  }, [isDirty, setDirty, delay]);
+
+  return { isSaving };
 };

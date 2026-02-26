@@ -6,11 +6,16 @@ export const exportService = {
     try {
       const dataUrl = await toPng(element, {
         backgroundColor: '#f8fafc',
+        cacheBust: true,
         style: {
           transform: 'scale(1)',
-        },
+        }
       });
-      return await window.electronAPI.exportFile(title, dataUrl, 'png');
+      const link = document.createElement('a');
+      link.download = `${title}.png`;
+      link.href = dataUrl;
+      link.click();
+      return true;
     } catch (error) {
       console.error('PNG export failed:', error);
       return false;
@@ -30,17 +35,12 @@ export const exportService = {
       });
 
       pdf.addImage(dataUrl, 'PNG', 0, 0, element.offsetWidth, element.offsetHeight);
-      const pdfData = pdf.output('datauristring');
+      pdf.save(`${title}.pdf`);
 
-      return await window.electronAPI.exportFile(title, pdfData, 'pdf');
+      return true;
     } catch (error) {
       console.error('PDF export failed:', error);
       return false;
     }
-  },
-
-  async exportToJson(data: any, title: string) {
-    const jsonString = JSON.stringify(data, null, 2);
-    return await window.electronAPI.exportFile(title, jsonString, 'json');
   }
 };
